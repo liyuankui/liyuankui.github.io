@@ -138,7 +138,8 @@ footer.site a{color:#9fc3e8}
 </div>
 
 <footer class="site"><div class="wrap">
-  三板斧运动家族 · <a href="https://liyuankui.github.io/">Kyle Li</a> · 内容站均单文件零构建 · PostHog 仅记录匿名使用统计
+  <button class="go" id="shareBtn" style="background:var(--bing);margin-bottom:14px">⧉ 复制家族分享文案</button>
+  <div>三板斧运动家族 · <a href="https://liyuankui.github.io/">Kyle Li</a> · 内容站均单文件零构建 · PostHog 仅记录匿名使用统计</div>
 </div></footer>
 
 <script>
@@ -170,6 +171,13 @@ document.querySelectorAll('.mx a, .mx .soon').forEach(el => el.addEventListener(
 document.querySelectorAll('.go').forEach(el => el.addEventListener('click', () => {
   track('card_click', { site: el.dataset.site });
 }));
+document.getElementById('shareBtn').onclick = async () => {
+  const txt = '三板斧运动家族｜四问四站：怎么打、怎么判、跟谁打、为什么练不会——匹克球/羽毛球/乒乓/网球十六格矩阵，十格已上线 https://liyuankui.github.io/sports/';
+  try { await navigator.clipboard.writeText(txt); } catch (e) {}
+  const b = document.getElementById('shareBtn'); b.textContent = '✓ 已复制';
+  setTimeout(() => b.textContent = '⧉ 复制家族分享文案', 1600);
+  track('share_copy', {});
+};
 if (!localStorage.getItem(UID_KEY)) localStorage.setItem(UID_KEY, 'u-' + Math.random().toString(36).slice(2, 10));
 track('page_view', {});
 </script>
